@@ -1,58 +1,67 @@
-'use strict';
-//#1
+const character = {
+    name: `Picachu`,
+    defaultHP: 100,
+    damageHP: 100,
+    btn: document.getElementById(`btn-kick-character`),
+    elHP: document.getElementById(`health-character`),
+    widthHP: document.getElementById(`progressbar-character`)
+};
 
-const firstRow = prompt('Введите строку №1');
-const secondRow = prompt('Введите строку №2');;
-const letter = prompt('Какую букву будем считать?');
+const enemy = {
+    name: `Charmander`,
+    defaultHP: 100,
+    damageHP: 100,
+    btn:document.getElementById(`btn-kick-enemy`),
+    elHP: document.getElementById(`health-enemy`),
+    widthHP: document.getElementById(`progressbar-enemy`)
+};
 
-function getRow(firstRow, secondRow) {
-    let count = 0;
-    let count2 = 0;
-    for (let i = 0; i < firstRow.length; i++) {
-        if (firstRow.charAt(i) === letter || firstRow.charAt(i) === letter.toUpperCase()) {
-            count++;
+const renderHPBar = (person) => {
+    person.widthHP.style.width = `${person.damageHP} %`;
+};
 
-        }
-    }
-    for (let i = 0; i < secondRow.length; i++) {
-        if (secondRow.charAt(i) === letter || secondRow.charAt(i) === letter.toUpperCase()) {
-            count2++;
+const renderHPLife = (person) => {
+    person.elHP.innerText = `${person.defaultHP} / ${person.damageHP}`;
+};
 
-        }
-    }
-    if (count > count2) {
-        alert('Большее количество букв ' + letter + ' в строке ' + firstRow);
-    } else if (count === count2) {
-        alert("Одинаковое количество букв " + letter);
+const renderHP = (person) => {
+    renderHPLife(person);
+    renderHPBar(person);
+}
+
+const ChangeHP = (count, person) => {
+    if (person.damageHP < count) {
+        person.damageHP = 0;
+        alert(`${person.name} проиграл`);
+        person.btn.setAttribute(`disabled`, `disabled`);
     } else {
-        alert('Большее количество букв ' + letter + ' в строке ' + secondRow);
+        person.damageHP -= count;
     }
+    renderHP(person);
+};
+
+const getRandomNum = (num) => {
+    return Math.ceil(Math.random() * num);
 }
 
-getRow(firstRow, secondRow);
-
-//#2
-
-let number = prompt('Введите номер телефона');
-const editNumber = (p) => {
-    let newNumber = '';
-    for (let i = 0; i < p.length; i++) {
-        if (p.length > 10) {
-            if (p.charAt(0) === "8" || p.charAt(0) === "7") {
-                newNumber = '+' + '7 ' + '(' + p.charAt(1) + p.charAt(2) + p.charAt(3) + ') ' + p.charAt(4) + p.charAt(5) + p.charAt(6) + '-' + p.charAt(7) + p.charAt(8) + '-' + p.charAt(9) + p.charAt(10);
-            } else if (p.charAt(0) === '9') {
-                newNumber = '';
-                newNumber = '+7 ' + '(' + p.charAt(0) + p.charAt(1) + p.charAt(2) + ') ' + p.charAt(3) + p.charAt(4) + p.charAt(5) + '-' + p.charAt(6) + p.charAt(7) + '-' + p.charAt(8) + p.charAt(9);
-            } else if (p.charAt(0) === "+" && p.charAt(0) === "7") {
-                newNumber = p.charAt(0) + p.charAt(1) + '' + '(' + p.charAt(2) + p.charAt(3) + p.charAt(4) + ') ' + p.charAt(5) + p.charAt(6) + p.charAt(7) + '-' + p.charAt(8) + p.charAt(9) + '-' + p.charAt(10) + p.charAt(11);
-            } else {
-                alert("Неверный формат номера!");
-            }
-        }
-        else {
-            alert("Неверный формат номера!");
-        }
-    }
-    alert(newNumber.trim());
+const onCharacterBtnClick = () => {
+    ChangeHP(getRandomNum(20), character);
 }
-editNumber(number);
+
+const onEnemyBtnClick = () => {
+    ChangeHP(getRandomNum(30), enemy);
+}
+
+const addClickListeners = () => {
+    character.btn.addEventListener('click', onCharacterBtnClick);
+    enemy.btn.addEventListener('click', onEnemyBtnClick);
+}
+
+const init = () => {
+    renderHP(character);
+    renderHP(enemy);
+    addClickListeners();
+};
+
+
+init();
