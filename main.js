@@ -1,4 +1,6 @@
 const logs = document.querySelector('#logs');
+const clicks = document.querySelector('#clicks');
+const maxClicks = 6;
 
 const character = {
     name: `Picachu`,
@@ -7,10 +9,10 @@ const character = {
     btn: document.getElementById(`btn-kick-character`),
     elHP: document.getElementById(`health-character`),
     widthHP: document.getElementById(`progressbar-character`),
-    changeHP: changeHP,
-    renderHP: renderHP,
-    renderHPLife: renderHPLife,
-    renderHPBar: renderHPBar
+    changeHP,
+    renderHP,
+    renderHPLife,
+    renderHPBar,
 };
 
 const enemy = {
@@ -20,10 +22,10 @@ const enemy = {
     btn: document.getElementById(`btn-kick-enemy`),
     elHP: document.getElementById(`health-enemy`),
     widthHP: document.getElementById(`progressbar-enemy`),
-    changeHP: changeHP,
-    renderHP: renderHP,
-    renderHPLife: renderHPLife,
-    renderHPBar: renderHPBar
+    changeHP,
+    renderHP,
+    renderHPLife,
+    renderHPBar,
 };
 
 function renderHPBar() {
@@ -48,7 +50,6 @@ function createFightText(text) {
         logs.insertBefore(p, logs.children[0]);
 }
     };
-
 
 
 function changeHP(count) {
@@ -102,5 +103,30 @@ function generateLog(firstPerson, secondPerson) {
     ];
     return logs[getRandomNum(logs.length) - 1]
 }
+function createClicksText(text) {
+    const p = document.createElement('p');
+    for (let i = 0; i <= maxClicks; i++) {
+        p.innerText = text;
+        clicks.insertBefore(p, clicks.children[0]);
+    }
+};
 
+const countClicks = (btn, name) => {
+let clicks = 0;
+btn.addEventListener('click', () => {
+    clicks +=1;
+    let clicksMore = maxClicks  - clicks;
+createClicksText(`${name} осталось еще ${clicksMore} кликов`);
+    if (clicks === maxClicks) {
+        clicks.innerHTML = '';
+        btn.setAttribute('disabled', 'disabled');
+        
+    };
+
+console.log(clicks)
+})
+}
+
+countClicks(enemy.btn, character.name);
+countClicks(character.btn, enemy.name)
 init();
