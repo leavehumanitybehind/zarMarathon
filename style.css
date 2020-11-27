@@ -472,3 +472,9 @@ h1 {
 .action label {
     padding: 6px 0;
 }
+
+#clicks {
+
+    max-height: 100px;
+    overflow: hidden;
+}
