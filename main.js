@@ -9,7 +9,7 @@ const control = document.querySelector('#control-player1');
 const control2 = document.querySelector('#control-player2');
 
 
-const player1 = new Pokemon({
+let player1 = new Pokemon({
     ...getRandomArrayValue(pokemons),
     selectors: 'player1'
 })
@@ -17,7 +17,9 @@ const player2 = new Pokemon({
     ...getRandomArrayValue(pokemons),
     selectors: 'player2'
 })
-
+if (player1.name === player2.name) {
+    player1 = {...player1 };
+ }
 const initFight = (startBtn) => {
     if (startBtn) {
         removeBtn(startBtn);
@@ -48,7 +50,6 @@ const initFight = (startBtn) => {
         })
         control2.appendChild(btn);
     })
-
 }
 
 const startGame = () => {
