@@ -1,6 +1,9 @@
-const getRandomNum = (min, max) => {
-    const num = max-min;
-    return Math.ceil(Math.random() * num);
+export const getRandomNum = (max,min) => {
+    return Math.ceil(Math.random() * (max - min) + min);
 }
 
-export default getRandomNum;
+export const getRandomArrayValue = (array) => {
+const item = array[Math.floor(Math.random() * array.length)]; 
+return item   
+}
+
