@@ -45,7 +45,10 @@ class Game {
                 player2.changeHP(kick.player1, function (count) {
                     const log = generateLog(player2, player1, count);
                     createFightText(log);
-                    player1.changeHP(kick.player2);
+                    setTimeout(() => {
+                        player1.changeHP(kick.player2);
+                    }, 1000)
+
                 });
             })
             control.appendChild(btn);
