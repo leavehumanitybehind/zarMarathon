@@ -27,3 +27,10 @@ export const createResetBtn = () => {
 export const removeBtn = (btn) => {
     btn.remove();
 };
+
+export const removeAllBtns = () => {
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach((button) => {
+        button.remove();
+    });
+}
